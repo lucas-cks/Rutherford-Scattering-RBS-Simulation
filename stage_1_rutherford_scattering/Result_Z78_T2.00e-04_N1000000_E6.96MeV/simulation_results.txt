@@ -1,0 +1,41 @@
+Rutherford Scattering Simulation Results
+========================================
+
+Input Parameters:
+-----------------
+Material:
+  Atomic number Z = 78
+  Density = 21.45 g/cm³
+  Atomic mass A = 195.08 g/mol
+  Mean excitation energy I = 790 eV
+  Atom density = 6.62e+022 atoms/cm³
+  Electron density = 5.16e+024 electrons/cm³
+
+Geometry:
+  Thickness = 0.0002000000 cm
+  Number of layers = 5000
+  Layer thickness dx = 4.00e-008 cm
+
+Incident Particle:
+  Charge number z = 2
+  Initial velocity = 1.83e+007 m/s
+  Rest mass = 6.64e-027 kg
+  Initial kinetic energy = 6.96 MeV
+  Initial direction = (1.00, 0.00, 0.00)
+
+Simulation Results:
+----------------------------------------------
+Total number of particles simulated: 1000000
+Final Energy (MeV):
+  Mean = 5.5041
+  Variance = 0.0006
+  Standard deviation = 0.0238
+
+Scattering Angle (degrees):
+  Mean = 3.8944
+  Variance = 10.1580
+  Standard deviation = 3.1872
+
+Backscattering:
+  Count = 98
+  Probability = 0.000098 (1/10204)
