@@ -3,8 +3,6 @@
 
 **Author:** Ching Kai Sing, Lucas
 
-[![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=lucas-cks&layout=compact&theme=vision-friendly-dark)](https://github.com/anuraghazra/github-readme-stats)
-
 ![C](https://img.shields.io/badge/Language-C-blue?logo=c)
 ![Python](https://img.shields.io/badge/Language-Python-yellow?logo=python)
 
@@ -195,8 +193,8 @@ Auxiliary Python scripts:
 
 ### Clone
 ```bash
-git clone https://github.com/lucas-cks/Rutherford-Scattering-RBS-Simulation-Surrogate-Modelling.git
-cd Rutherford-Scattering-RBS-Simulation-Surrogate-Modelling
+git clone https://github.com/lucas-cks/Rutherford-Scattering-RBS-Simulation.git
+cd Rutherford-Scattering-RBS-Simulation
 ```
 
 ### Python environment
@@ -394,7 +392,7 @@ For questions, feature requests, or collaboration, please open an issue or conta
 
 **Ching Kai Sing, Lucas**  
 Department of Physics, The Chinese University of Hong Kong (CUHK)  
-Repository: [https://github.com/lucas-cks/Rutherford-Scattering-RBS-Simulation-Surrogate-Modelling](https://github.com/lucas-cks/Rutherford-Scattering-RBS-Simulation-Surrogate-Modelling)
+Repository: [https://github.com/lucas-cks/Rutherford-Scattering-RBS-Simulation](https://github.com/lucas-cks/Rutherford-Scattering-RBS-Simulation)
 
 [Back to Top](#monte-carlo-simulation-of-rutherford-scattering--rbs)
 ```
