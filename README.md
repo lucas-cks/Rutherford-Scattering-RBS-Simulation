@@ -1,7 +1,7 @@
 # Monte Carlo Simulation of Rutherford Scattering & RBS
 ## A Three‑Stage Pipeline from Monte Carlo to Neural Network Predictions
 
-**Author:** Lucas Kai Sing Ching  
+**Author:** Ching Kai Sing, Lucas
 
 [![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=lucas-cks&layout=compact&theme=vision-friendly-dark)](https://github.com/anuraghazra/github-readme-stats)
 
@@ -13,6 +13,7 @@
 ![NumPy](https://img.shields.io/badge/Library-NumPy-013243?logo=numpy&logoColor=white)
 ![Pandas](https://img.shields.io/badge/Library-Pandas-150458?logo=pandas&logoColor=white)
 ![Matplotlib](https://img.shields.io/badge/Library-Matplotlib-ffffff?logo=matplotlib&logoColor=black)
+![SciPy](https://img.shields.io/badge/Library-SciPy-8CAAE6?logo=scipy&logoColor=white)
 ![PyTorch](https://img.shields.io/badge/Library-PyTorch-EE4C2C?logo=pytorch&logoColor=white)
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
@@ -126,7 +127,6 @@ Primary phenomena reproduced:
 │   ├── Predictor.py
 │   ├── analyse_RBS.py
 │   ├── Z_sweep_validation.png
-│   └── ...
 ├── LICENSE
 └── README.md
 ```
@@ -136,34 +136,55 @@ Primary phenomena reproduced:
 ---
 
 ## Code Structure
-High‑level flow of the C simulation:
+
+High‑level flow of the main C simulation (`RBS_OpenMP.c` – importance‑sampled RBS with OpenMP):
 
 ```text
 main()
-├── parse_args_and_config()
-├── init_simulation_parameters()
-├── init_rng_per_thread()
-├── # parallel OpenMP region
-│   └── for each particle:
-│       ├── sample_impact_parameter()   # biased or uniform
-│       ├── propagate_through_layers()  # stopping, straggling
-│       ├── attempt_scatter()           # Rutherford kinematics if event occurs
-│       ├── assign_weight_if_biased()
-│       └── accumulate_private_tallies()
-└── reduction_and_write_output()          # weighted sums, histograms, scalars
+├── input_parameters()                      # CSV or manual input
+├── compute initial energy, histogram bins
+├── # OpenMP parallel region
+│   ├── per‑thread RNG (MT19937, seeded master_seed + tid)
+│   ├── per‑thread private accumulators (sums, histograms, energy_spectrum_170)
+│   └── #pragma omp for schedule(dynamic,1000)
+│       └── simulate_one_particle()
+│           ├── initialise particle (pos, dir, weight = 1.0)
+│           ├── for each layer:
+│           │   ├── scattering_determine()          # P = π b_max² n_atom dx
+│           │   ├── if scatter:
+│           │   │   ├── sample u, b_actual = b_max·u²
+│           │   │   ├── weight *= 4u³
+│           │   │   ├── sample xi (scatter position inside layer)
+│           │   │   ├── compute energy loss before scatter
+│           │   │   ├── compute θ (Rutherford), φ = 2π·v
+│           │   │   ├── rotate_direction()
+│           │   │   └── update position, areal density
+│           │   ├── else:
+│           │   │   └── drift full layer
+│           │   ├── energy_loss()                  # polynomial stopping + straggling
+│           │   └── new_velocity()
+│           ├── if scattering angle in [165°,175°]: add to energy_hist_170
+│           └── accumulate weighted sums & histograms
+├── combine per‑thread results
+├── output_histogram()                          # weighted angular PDF
+├── output_energy_spectrum_170()                # weighted 170° energy spectrum
+└── output_results()                            # weighted mean, variance, backscatter probability
 ```
 
-Auxiliary Python workflow:
+The pure Rutherford code (`rutherford_scattering.c`) follows a similar but single‑threaded flow without importance sampling; it uses uniform impact parameter sampling and the Bethe‑Bloch formula.
 
-- `run_list_generator.py` – builds full sweep of (Z, thickness, energy, seeds)
-- `python_driver.py` – parallel dispatcher, collects outputs
-- `analyse_RBS.py` – parses results, trains neural networks, generates plots
-- `Predictor.py` – interactive predictor (converted to `.exe`)
-- `Periodic_table_scanner.py` – periodic table sweep
+Auxiliary Python scripts:
 
-[Back to Top](#monte-carlo-simulation-of-rutherford-scattering--rbs)
+- `run_list_generator.py` – builds full sweep of (Z, thickness, energy, seeds) → `run_list.csv`
+- `python_driver.py` – parallel dispatcher, collects outputs from the C executable
+- `analyse_RBS.py` – parses all result folders, aggregates data, trains neural networks, generates plots
+- `Predictor.py` – interactive predictor (converted to `RBS_Predictor.exe` via PyInstaller)
+- `Periodic_table_scanner.py` – sweeps Z = 1–92, plots energy loss and backscatter probability
+- `data_visualise.py` – visualises pure Rutherford output (heatmap, angular distribution, energy spectrum)
 
 ---
+
+[Back to Top](#monte-carlo-simulation-of-rutherford-scattering--rbs)
 
 ## Installation & Usage
 
