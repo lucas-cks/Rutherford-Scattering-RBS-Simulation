@@ -5,25 +5,21 @@ import os
 import re
 from scipy.stats import norm
 
-# ============================================
 # 1. Configuration & Input Filenames
-# ============================================
 L = 10.0               # Distance from foil to detector screen (cm)
 ZOOM = 2.0             # Heatmap display range [-ZOOM, ZOOM] (cm)
 BINS_2D = 200          # Resolution for Heatmap
 BINS_ANGLE = 100       # Bins for Angular Distribution
 BINS_ENERGY = 100      # Bins for Energy Spectrum
 
-txt_filename = "simulation_results.txt"  # Your C-generated report
-csv_filename = "results_raw.csv"         # Your C-generated raw data
+txt_filename = "simulation_results.txt"  
+csv_filename = "results_raw.csv"       
 
 # Physical Constants (SI Units)
 E_CHARGE = 1.602176634e-19
 EPSILON0 = 8.8541878128e-12
 
-# ============================================
-# 2. Automated Parameter Extraction (Regex)
-# ============================================
+# 2. Automated Parameter Extraction
 def extract_parameters(file_path):
     if not os.path.exists(file_path):
         raise FileNotFoundError(f"Error: {file_path} not found. Please run the C simulation first.")
@@ -46,17 +42,13 @@ def extract_parameters(file_path):
 print("Step 1: Extracting physical parameters from report...")
 p = extract_parameters(txt_filename)
 
-# ============================================
 # 3. Dynamic Folder Setup
-# ============================================
 # Create a unique folder based on simulation parameters to avoid overwriting data
 folder_name = f"Result_Z{p['Z']}_T{p['thickness']:.2e}_N{p['total_n']}_E{p['Ek_MeV']:.2f}MeV"
 os.makedirs(folder_name, exist_ok=True)
 print(f"Step 2: Results will be saved in directory: '{folder_name}'")
 
-# ============================================
 # 4. Data Loading & Statistical Analysis
-# ============================================
 print(f"Step 3: Reading raw data from {csv_filename}...")
 df = pd.read_csv(csv_filename, on_bad_lines='skip')
 total_rows = len(df)
@@ -79,9 +71,7 @@ print(f"Scattering Angle (deg): Mean = {mean_a:.4f}, Std Dev = {std_a:.4f}")
 print(f"Backscattering Count: {p['backscatter']} / {p['total_n']} (Prob: {back_prob:.6f})")
 print("="*50 + "\n")
 
-# ============================================
 # 5. Plot 1: Particle Impact Heatmap (2D)
-# ============================================
 print("Step 4: Generating 2D Heatmap...")
 # Filter only forward-moving particles to project onto the screen
 forward = df[df['dir_x'] > 0].copy()
@@ -103,9 +93,7 @@ if len(forward) > 0:
     plt.savefig(os.path.join(folder_name, "heatmap.png"), dpi=300)
     plt.close()
 
-# ============================================
 # 6. Plot 2: Angular Distribution vs Absolute Theory
-# ============================================
 print("Step 5: Simulating Result VS Theoretical Result")
 # Calculate Absolute Theoretical Rutherford Cross-Section
 Ek_joule = p['Ek_MeV'] * 1e6 * E_CHARGE
@@ -137,9 +125,7 @@ plt.tight_layout()
 plt.savefig(os.path.join(folder_name, "angle_distribution.png"), dpi=300)
 plt.close()
 
-# ============================================
 # 7. Plot 3: Energy Spectrum (Straggling Effect)
-# ============================================
 print("Step 6: Generating Energy Spectrum with Gaussian Fit...")
 plt.figure(figsize=(10, 6))
 counts, bins, _ = plt.hist(df['final_energy_MeV'], bins=BINS_ENERGY, 
