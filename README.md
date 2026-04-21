@@ -6,8 +6,9 @@
 [![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=lucas-cks&layout=compact&theme=vision-friendly-dark)](https://github.com/anuraghazra/github-readme-stats)
 
 ![C](https://img.shields.io/badge/Language-C-blue?logo=c)
-![OpenMP](https://img.shields.io/badge/OpenMP-2A6F6F?logo=openmp&logoColor=white)
 ![Python](https://img.shields.io/badge/Language-Python-yellow?logo=python)
+
+![OpenMP](https://img.shields.io/badge/Parallel-OpenMP-green?logo=openmp)
 
 ![NumPy](https://img.shields.io/badge/Library-NumPy-013243?logo=numpy&logoColor=white)
 ![Pandas](https://img.shields.io/badge/Library-Pandas-150458?logo=pandas&logoColor=white)
