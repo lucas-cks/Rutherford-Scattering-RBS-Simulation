@@ -1,0 +1,41 @@
+Rutherford Scattering Simulation Results (Stable Importance Sampling - OpenMP)
+===================================================================
+
+Input Parameters:
+-----------------
+Material:
+  Atomic number Z = 79
+  Density = 19.32 g/cm³
+  Atomic mass A = 196.97 g/mol
+  Atom density = 5.91e+22 atoms/cm³
+  Stopping cross section polynomial coefficients (1e-15 eV·cm², E in MeV):
+    a0=5.7990e+01, a1=1.9320e+02, a2=-1.8540e+02, a3=7.7980e+01, a4=-1.5590e+01
+Geometry:
+  Thickness = 0.0002000000 cm
+  Number of layers = 2500
+  Layer thickness dx = 8.00e-08 cm
+
+Incident Particle:
+  Charge number z = 2
+  Initial velocity = 1.03e+07 m/s
+  Rest mass = 6.64e-27 kg
+  Initial kinetic energy = 2.20 MeV
+  Initial direction = (1.00, 0.00, 0.00)
+
+Simulation Results (Weighted):
+----------------------------------------------
+Total number of simulated particles: 10000000
+Total weight (effective physical particles): 1.000e+07
+Final Energy (MeV):
+  Mean = 0.7794
+  Variance = 0.0009
+  Standard deviation = 0.0300
+
+Scattering Angle (degrees):
+  Mean = 5.7542
+  Variance = 147.4145
+  Standard deviation = 12.1414
+
+Backscattering (θ>90°):
+  Weighted count = 2.709e+04
+  Probability = 2.708660e-03 (1/369)
