@@ -56,15 +56,15 @@ Designed for reproducibility, extensibility (compound targets, depth profiling),
 ## Physics Background
 Implemented physics and modelling choices (following Chu, Mayer, Nicolet 1978):
 
-- **Rutherford elastic Coulomb scattering** – differential cross‑section \(d\sigma/d\Omega \propto 1/\sin^4(\theta/2)\) in the heavy‑target limit.
-- **Kinematic factor \(K\)** – lab‑frame energy transfer: \(E_1 = K E_0\).
+- **Rutherford elastic Coulomb scattering** – differential cross‑section $$\(d\sigma/d\Omega \propto 1/\sin^4(\theta/2)\)$$ in the heavy‑target limit.
+- **Kinematic factor \(K\)** – lab‑frame energy transfer: $$\(E_1 = K E_0\)$$.
 - **Bethe‑Bloch stopping power** – continuous in‑layer energy loss; Bragg’s rule for compounds.
-- **Gaussian energy straggling** – Bohr variance \(\Omega_{\mathrm{B}}^2 = 4\pi (Z_1 e^2)^2 Z_2 N t\).
-- **Depth → energy conversion** – \(\Delta E = [\epsilon] N t\) for areal density estimation.
-- **Thin‑target Rutherford backscatter probability** – \(P_{\mathrm{back}} \approx N t \sigma_{\mathrm{back}}(E_{\mathrm{eff}})\) with energy‑loss evaluated along the path.
+- **Gaussian energy straggling** – Bohr variance $$\(\Omega_{\mathrm{B}}^2 = 4\pi (Z_1 e^2)^2 Z_2 N t\).$$
+- **Depth → energy conversion** – $$\(\Delta E = [\epsilon] N t\)$$ for areal density estimation.
+- **Thin‑target Rutherford backscatter probability** – $$\(P_{\mathrm{back}} \approx N t \sigma_{\mathrm{back}}(E_{\mathrm{eff}})\)$$ with energy‑loss evaluated along the path.
 
 Primary phenomena reproduced:
-- Angular distributions consistent with Rutherford \(\csc^4(\theta/2)\) scaling.
+- Angular distributions consistent with Rutherford $$\(\csc^4(\theta/2)\)$$ scaling.
 - Backscatter probabilities consistent with theoretical cross‑sections when energy loss is accounted for.
 - Spectral broadening from energy straggling and depth distributions.
 
@@ -75,7 +75,7 @@ Primary phenomena reproduced:
 ## Implementation Details
 - **Languages:** C for high‑performance simulation cores and importance‑sampled RBS; Python for drivers, analysis, dataset aggregation, and ML.
 - **RNG:** Per‑thread MT19937 for OpenMP runs (seeded `master_seed + thread_id`).
-- **Importance sampling:** sample \(b = b_{\max} \cdot u^2\), weight \(w = 4 u^3\). Weighted tallies preserve unbiased estimates while vastly increasing large‑angle statistics.
+- **Importance sampling:** sample $$\(b = b_{\max} \cdot u^2\)$$, weight $$\(w = 4 u^3\)$$. Weighted tallies preserve unbiased estimates while vastly increasing large‑angle statistics.
 - **Parallelisation:** OpenMP with private thread accumulators, dynamic scheduling, and final reduction to global results.
 - **Output formats:** Per‑run CSV files with weighted histograms (energy bins, angular bins), scalar summaries, and run metadata.
 - **Batch automation:** Python driver generates run lists and dispatches simulator instances; supports resume and multi‑worker execution.
@@ -273,8 +273,8 @@ Produces `Z_sweep_validation.png` showing energy loss and backscatter probabilit
 | Energy straggling σ (MeV) | 0.0238 |
 | Mean scattering angle (°) | 3.8944 |
 | Backscatter count (sim) | 98 |
-| Simulated \(P_{\text{back}}\) | \(9.8\times10^{-5}\) |
-| Theoretical \(P_{\text{back}}\) | \(1.08\times10^{-4}\) |
+| Simulated $$\(P_{\text{back}}\)$$ | $$\(9.8\times10^{-5}\)$$ |
+| Theoretical $$\(P_{\text{back}}\)$$ | $$\(1.08\times10^{-4}\)$$ |
 
 **Gold (Z = 79; E₀ = 5.52 MeV; t = 4.0×10⁻⁵ cm; 1×10⁶ particles)**
 
@@ -284,8 +284,8 @@ Produces `Z_sweep_validation.png` showing energy loss and backscatter probabilit
 | Energy straggling σ (MeV) | 0.0100 |
 | Mean scattering angle (°) | 1.8326 |
 | Backscatter count (sim) | 30 |
-| Simulated \(P_{\text{back}}\) | \(3.0\times10^{-5}\) |
-| Theoretical \(P_{\text{back}}\) | \(3.15\times10^{-5}\) |
+| Simulated $$\(P_{\text{back}}\)$$ | $$\(3.0\times10^{-5}\)$$ |
+| Theoretical $$\(P_{\text{back}}\)$$ | $$\(3.15\times10^{-5}\)$$ |
 
 Agreement: simulated backscatter probabilities agree with Rutherford‑theory‑based calculations within ≈10% for validation cases above.
 
@@ -293,17 +293,17 @@ Agreement: simulated backscatter probabilities agree with Rutherford‑theory‑
 - **Sweep:** Z ∈ {79,78,13,14,6,8,32}; energies = {1.54,2.20,2.72,3.30,4.00} MeV; six thicknesses; seeds 1–10.
 - **Runs:** 2,100 independent runs (10 seeds each); weighted particles simulated ≈ 2.1×10⁹.
 - **Wall time:** ≈10 hours on a 16‑core machine.
-- **Validation:** Simulated \(P_{\text{back}}\) matches theoretical \(P_{\text{back}}(E_{\text{eff}})\) within ≲15% across tested targets and thicknesses (energy‑loss corrections integrated numerically).
+- **Validation:** Simulated $$\(P_{\text{back}}\)$$ matches theoretical $$\(P_{\text{back}}(E_{\text{eff}})\)$$ within ≲15% across tested targets and thicknesses (energy‑loss corrections integrated numerically).
 
 **Example validation table (2.20 MeV alpha particles, θ = 170°):**
 
-| Target | Z | Thickness (cm) | Simulated \(P_{\text{back}}\) (mean ± std) | Theoretical \(P_{\text{back}}\) |
+| Target | Z | Thickness (cm) | Simulated $$\(P_{\text{back}}\)$$ (mean ± std) | Theoretical $$\(P_{\text{back}}\)$$ |
 |--------|---|----------------|-------------------------------------------|-------------------------------|
-| Au     | 79 | \(2.0\times10^{-4}\) | \((2.00 \pm 0.04)\times10^{-3}\) | \(2.9\times10^{-3}\) |
-| Pt     | 78 | \(2.0\times10^{-4}\) | \((2.65 \pm 0.05)\times10^{-3}\) | \(2.8\times10^{-3}\) |
-| Si     | 14 | \(3.0\times10^{-4}\) | \((4.72 \pm 0.09)\times10^{-5}\) | \(5.1\times10^{-5}\) |
-| Al     | 13 | \(1.0\times10^{-4}\) | \((1.57 \pm 0.05)\times10^{-5}\) | \(1.7\times10^{-5}\) |
-| Ge     | 32 | \(3.0\times10^{-4}\) | \((2.83 \pm 0.06)\times10^{-4}\) | \(3.0\times10^{-4}\) |
+| Au     | 79 | $$\(2.0\times10^{-4}\)$$ | $$\((2.00 \pm 0.04)\times10^{-3}\)$$ | $$\(2.9\times10^{-3}\)$$ |
+| Pt     | 78 | $$\(2.0\times10^{-4}\)$$ | $$\((2.65 \pm 0.05)\times10^{-3}\)$$ | $$\(2.8\times10^{-3}\)$$ |
+| Si     | 14 | $$\(3.0\times10^{-4}\)$$ | $$\((4.72 \pm 0.09)\times10^{-5}\)$$ | $$\(5.1\times10^{-5}\)$$ |
+| Al     | 13 | $$\(1.0\times10^{-4}\)$$ | $$\((1.57 \pm 0.05)\times10^{-5}\)$$ | $$\(1.7\times10^{-5}\)$$ |
+| Ge     | 32 | $$\(3.0\times10^{-4}\)$$ | $$\((2.83 \pm 0.06)\times10^{-4}\)$$ | $$\(3.0\times10^{-4}\)$$ |
 
 [Back to Top](#monte-carlo-simulation-of-rutherford-scattering--rbs)
 
@@ -337,7 +337,7 @@ Agreement: simulated backscatter probabilities agree with Rutherford‑theory‑
 - Batch size: 32
 
 ### Performance
-- **Scalars:** test \(R^2\) ≈ 0.97–0.99 (energy loss, \(\log_{10} P_{\text{back}}\), mean scattering angle).
+- **Scalars:** test $$\(R^2\) ≈ 0.97–0.99$$ (energy loss, $$\(\log_{10} P_{\text{back}}\$$), mean scattering angle).
 - **Spectrum:** captures overall 170° energy shape; larger MSE due to scarcity of exact backscatter events – training on more per‑seed spectra or using a different loss could improve fidelity.
 
 ### Deployment
