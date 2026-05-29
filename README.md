@@ -390,8 +390,6 @@ This project is licensed under the MIT License – see the [LICENSE](LICENSE) fi
 ## Contact
 For questions, feature requests, or collaboration, please open an issue or contact:
 
-**Ching Kai Sing, Lucas**  
-Department of Physics, The Chinese University of Hong Kong (CUHK)  
 Repository: [https://github.com/lucas-cks/Rutherford-Scattering-RBS-Simulation](https://github.com/lucas-cks/Rutherford-Scattering-RBS-Simulation)
 
 [Back to Top](#monte-carlo-simulation-of-rutherford-scattering--rbs)
