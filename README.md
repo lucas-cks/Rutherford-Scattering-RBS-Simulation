@@ -1,7 +1,6 @@
 # Monte Carlo Simulation of Rutherford Scattering & RBS
 ## A Three‑Stage Pipeline from Monte Carlo to Neural Network Predictions
 
-**Author:** Ching Kai Sing, Lucas
 
 ![C](https://img.shields.io/badge/Language-C-blue?logo=c)
 ![Python](https://img.shields.io/badge/Language-Python-yellow?logo=python)
