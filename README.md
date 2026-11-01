@@ -368,12 +368,6 @@ Agreement: simulated backscatter probabilities agree with Rutherford‑theory‑
 
 [Back to Top](#monte-carlo-simulation-of-rutherford-scattering--rbs)
 
----
-
-## License
-This project is licensed under the MIT License – see the [LICENSE](LICENSE) file for details.
-
-[Back to Top](#monte-carlo-simulation-of-rutherford-scattering--rbs)
 
 ---
 
